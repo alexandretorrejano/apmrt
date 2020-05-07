@@ -1,5 +1,5 @@
 if(!require(pacman)){install.packages("pacman")}
-pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rmarkdown,stringr,WriteXLS)
+pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rmarkdown,stringr,WriteXLS,devtools)
 
 fstart<-function(){
   setwd(dirname(rstudioapi::getSourceEditorContext()$path)) # Sets working directory to caller script's location
