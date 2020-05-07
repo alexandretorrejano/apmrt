@@ -1,15 +1,19 @@
 if(!require(pacman)){install.packages("pacman")}
 pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rmarkdown,stringr,WriteXLS,devtools)
 
-fstart<-function(){
-  setwd(dirname(rstudioapi::getSourceEditorContext()$path)) # Sets working directory to caller script's location
 
-  if(!require(pacman)){install.packages("pacman")} # Guarantees that pacman is installed for handling of other packages
+# Sets working directory, disables scientific notation, installs frequently used packages
+go<-function(){
+  setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+
+  if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
-  pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rmarkdown,stringr,WriteXLS) # Installs
+  pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rmarkdown,stringr,WriteXLS)
 }
 
-fwipe<-function(){
+
+# Clears connections, objects, plots, memory and console
+wipe<-function(){
     closeAllConnections()
     rm(list=ls())
     tryCatch(dev.off(),error=function(e){NULL})
@@ -17,7 +21,7 @@ fwipe<-function(){
     cat("\14Environment Wiped.\n")
 }
 
-
+# Loads data/object from file
 fload<-function(f,...){
   ext<-f%>%strsplit("\\.")%>%unlist
 
@@ -44,9 +48,9 @@ fload<-function(f,...){
   }
 
   return(d)
-} # Reads data from files and ensures data.table format with correct column types unless it's a RDS save in which case it reads the object as is
+}
 
-
+# Saves data/object to file
 fsave<-function(d,f,...){
   ext<-f%>%strsplit("\\.")%>%unlist
 
@@ -70,9 +74,10 @@ fsave<-function(d,f,...){
   } else{
     stop(paste0("FILE ERROR: UNKNOWN EXTENSION FOR WRITING: .",ext,"\n"))
   }
-} # Writes data/object to file
+}
 
-fquery<-function(con,q){
+# Queries an existing connection
+dbquery<-function(con,q){
   suf<-ifelse(grepl("\r\n",q),' (...)','')
   cat(paste0("Running Query [",gsub("\n.*",'',q)%>%gsub(pattern='\r',replacement=''),suf,"]: "))
   x<-DBI::dbGetQuery(con,q)
@@ -80,6 +85,20 @@ fquery<-function(con,q){
   return(x)
 }
 
-fsub<-function(x,pattern,replacement,ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE){
+# Replaces a pattern in a vector of strings
+psub<-function(x,pattern,replacement,ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE){
   gsub(pattern, replacement, x, ignore.case, perl,fixed,useBytes)
+}
+
+# Automatically processes a vector of strings that contains phone numbers. Aims to keep the last 9 digits without special characters
+telproc<-function(x){
+  x[is.na(x)]<-""
+  x%<>%gsub(pattern="[^0-9.-]", replacement="")%>%
+    gsub(pattern="\\.", replacement="")%>%
+    gsub(pattern=",", replacement="")%>%
+    gsub(pattern="\\+", replacement="")%>%
+    gsub(pattern="\\-", replacement="")
+  x[nchar(x)>9]%<>%str_sub(-9,-1)
+  x[nchar(x)<9]<-NA
+  x
 }
