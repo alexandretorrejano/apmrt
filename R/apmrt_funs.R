@@ -1,14 +1,15 @@
 if(!require(pacman)){install.packages("pacman")}
-pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rmarkdown,stringr,WriteXLS,devtools)
+pacman::p_load(openxlsx,data.table,utils,readxl,DBI)
 
 
 # Sets working directory, disables scientific notation, installs frequently used packages
 go<-function(){
   setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 
-  if(!require(pacman)){install.packages("pacman")}
+  #if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
   pacman::p_load(backports,bit64,cluster,data.table,DBI,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS)
+  return("Settings")
 }
 
 
@@ -19,6 +20,12 @@ wipe<-function(){
     tryCatch(dev.off(),error=function(e){NULL})
     gc()
     cat("\14Environment Wiped.\n")
+}
+
+#wipe() then go()
+wipengo<-function(){
+  wipe()
+  go()
 }
 
 # Loads data/object from file
