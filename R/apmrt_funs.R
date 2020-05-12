@@ -16,7 +16,7 @@ go<-function(){
 # Clears connections, objects, plots, memory and console
 wipe<-function(){
     closeAllConnections()
-    rm(list=ls())
+    rm(list=ls(envir=.GlobalEnv),envir=.GlobalEnv)
     tryCatch(dev.off(),error=function(e){NULL})
     gc()
     cat("\14Environment Wiped.\n")
