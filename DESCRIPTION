@@ -1,7 +1,7 @@
 Package: apmrt
 Type: Package
 Title: Makes my life easier
-Version: 0.1.7
+Version: 0.1.8
 Author: Alexandre Torrejano
 Maintainer: The package maintainer <alexandretorrejano@gmail.com>
 Description: More about what it does (maybe more than one line)
