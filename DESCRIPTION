@@ -1,11 +1,14 @@
 Package: apmrt
 Type: Package
 Title: Makes my life easier
-Version: 0.1.8
+Version: 0.1.9
 Author: Alexandre Torrejano
 Maintainer: The package maintainer <alexandretorrejano@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: Contains some functions that encompass code chunks that I've had to repeat on a daily basis.
+    Notably: 
+    -a file reader and a file writer that wrap different functions from data.table, openxlsx and readxl;
+    -a function the wipes the environment of all temporary data;
+    -a function that sets frequent options and loads frequent packages while setting the working dir to source file location.
+License: No license. Personal use.
 Encoding: UTF-8
 LazyData: true

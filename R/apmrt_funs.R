@@ -8,7 +8,7 @@ go<-function(){
 
   #if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
-  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS)
+  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS)
   cat("Options Set.\n")
 }
 
