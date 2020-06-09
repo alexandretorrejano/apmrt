@@ -8,7 +8,7 @@ go<-function(){
 
   #if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
-  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS)
+  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,ROracle,chron)
   cat("Options Set.\n")
 }
 
@@ -96,6 +96,8 @@ dbquery<-function(con,q){
 psub<-function(x,pattern,replacement,ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE){
   gsub(pattern, replacement, x, ignore.case, perl,fixed,useBytes)
 }
+
+prog<-function(total){progress::progress_bar$new(  format = "Processing [:bar] :current/:total iterations (:percent) elapsed time: :elapsed eta: :eta",  clear = FALSE,   total = total,   width = 90)}
 
 # Automatically processes a vector of strings that contains phone numbers. Aims to keep the last 9 digits without special characters
 telproc<-function(x){
