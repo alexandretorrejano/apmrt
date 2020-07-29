@@ -1,8 +1,10 @@
+
 {
-  if(require("apmrt")){
+  #library(apmrt)
+  #if(require("apmrt")){
     ver1<-packageVersion("apmrt")
     remove.packages("apmrt")
-    }
+  #  }
   devtools::install_github("alexandretorrejano/apmrt")
   library(apmrt)
 

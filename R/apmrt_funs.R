@@ -28,6 +28,15 @@ wipengo<-function(){
   go()
 }
 
+cleango<-function(){
+  closeAllConnections()
+  rm(list=ls(envir=.GlobalEnv),envir=.GlobalEnv)
+  tryCatch(dev.off(),error=function(e){NULL})
+  gc()
+  cat("\nEnvironment Wiped.\n")
+  go()
+}
+
 # Loads data/object from file
 fload<-function(f,...){
   ext<-f%>%strsplit("\\.")%>%unlist
