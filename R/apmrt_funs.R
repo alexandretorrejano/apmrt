@@ -124,7 +124,7 @@ telproc<-function(x){
 
 prload<-function(f){
   d<-getwd()
-  d<-gsub("CVM Campaigns Management - Documentos.*","CVM Campaigns Management - Documentos",wd)
+  d<-gsub("CVM Campaigns Management - Documentos.*","CVM Campaigns Management - Documentos",d)
   d<-paste0(pr,"/Processos Recorrentes/",f)
   fload(d)
 }
