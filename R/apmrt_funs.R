@@ -15,11 +15,11 @@ go<-function(){
 
 # Clears connections, objects, plots, memory and console
 wipe<-function(){
-    closeAllConnections()
-    rm(list=ls(envir=.GlobalEnv),envir=.GlobalEnv)
-    tryCatch(dev.off(),error=function(e){NULL})
-    gc()
-    cat("\14Environment Wiped.\n")
+  closeAllConnections()
+  rm(list=ls(envir=.GlobalEnv),envir=.GlobalEnv)
+  tryCatch(dev.off(),error=function(e){NULL})
+  gc()
+  cat("\14Environment Wiped.\n")
 }
 
 #wipe() then go()
@@ -119,4 +119,12 @@ telproc<-function(x){
   x[nchar(x)>9]%<>%str_sub(-9,-1)
   x[nchar(x)<9]<-NA
   x
+}
+
+
+prload<-function(f){
+  d<-getwd()
+  d<-gsub("CVM Campaigns Management - Documentos.*","CVM Campaigns Management - Documentos",wd)
+  d<-paste0(pr,"/Processos Recorrentes/",f)
+  fload(d)
 }
