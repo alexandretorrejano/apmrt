@@ -9,6 +9,7 @@ editor_options:
   ver1<-packageVersion("apmrt")
   remove.packages("apmrt")
   .rs.restartR()
+  cat("Done. Proceed with install chunk.")
 }
 ```
 
