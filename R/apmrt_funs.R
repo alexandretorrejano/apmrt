@@ -8,7 +8,7 @@ go<-function(){
 
   #if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
-  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,ROracle,chron)
+  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,DBI,ROracle,chron)
   cat(paste0("Options set to the following directory:\n",getwd(),"\n"))
 }
 
@@ -128,4 +128,42 @@ prload<-function(f){
   x2<-x%>%psub(x1,"")%>%psub("/.*","/")
   x3<-"Processos Recorrentes/"
   fload(paste0(x1,x2,x3,f))
+}
+
+
+bdcon<-function(bd){
+  if(bd=="hive"){
+    return(odbc::dbConnect(odbc::odbc(),"Hive_PRD"))
+  }
+  if(bd=="oms"){
+    return(odbc::dbConnect(odbc::odbc(), "OMS"))
+  }
+  if(bd=="vll"){
+    return(ROracle::dbConnect(dbDriver("Oracle"),dbname="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=vllprd.mch.moc.sgps)(PORT=1530))(CONNECT_DATA=(SERVICE_NAME=VLL)))",username="gsoliveira",password="gsoliv3ir4"))
+  }
+  if(bd=="crm"){
+    return(odbc::dbConnect(odbc::odbc(), "CRMx32"))
+  }
+}
+
+
+bdquery<-function(bd,q){
+  Class<-class(bd)%>%as.vector
+  cat(paste0("\nRunning query on ",Class,".\n"))
+  if(Class=="Microsoft SQL Server"){
+    DBI::dbGetQuery(bd,q)%>%data.table
+  }
+  if(Class=="OraConnection"){
+    ROracle::dbSendQuery(bd,q)%>%fetch
+  }
+  if(Class=="Hive"){
+    x<-dbGetQuery(bd,q)%>%data.table
+    colnames(x)%<>%gsub(pattern=".*\\.",replacement="")
+    return(x)
+  }
+}
+
+cquery<-function(bdname,q){
+  bd<-bdcon(bdname)
+  bdquery(bd,q)
 }
