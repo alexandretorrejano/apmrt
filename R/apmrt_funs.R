@@ -157,7 +157,7 @@ bdquery<-function(bd,q){
     ROracle::dbSendQuery(bd,q)%>%fetch
   }
   if(Class=="Hive"){
-    x<-dbGetQuery(bd,q)%>%data.table
+    x<-DBI::dbGetQuery(bd,q)%>%data.table
     colnames(x)%<>%gsub(pattern=".*\\.",replacement="")
     return(x)
   }
