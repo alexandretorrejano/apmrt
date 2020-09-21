@@ -14,26 +14,29 @@ go<-function(){
 
 
 # Clears connections, objects, plots, memory and console
-wipe<-function(){
+wipe<-function(except=c()){
   closeAllConnections()
-  rm(list=ls(envir=.GlobalEnv),envir=.GlobalEnv)
+  rm(list=ls(envir=.GlobalEnv)[!ls(envir=.GlobalEnv)%in%except],envir=.GlobalEnv)
   tryCatch(dev.off(),error=function(e){NULL})
   gc()
   cat("\14Environment Wiped.\n")
 }
 
 #wipe() then go()
-wipengo<-function(){
-  wipe()
+wipengo<-function(except=c()){
+  wipe(except=except)
   go()
 }
-
-cleango<-function(){
+clean<-function(except=c()){
   closeAllConnections()
-  rm(list=ls(envir=.GlobalEnv),envir=.GlobalEnv)
+  rm(list=ls(envir=.GlobalEnv)[!ls(envir=.GlobalEnv)%in%except],envir=.GlobalEnv)
   tryCatch(dev.off(),error=function(e){NULL})
   gc()
-  cat("\nEnvironment Wiped.\n")
+  cat("\nEnvironment Cleaned.\n")
+}
+
+cleango<-function(except=c()){
+  clean(except=except)
   go()
 }
 
