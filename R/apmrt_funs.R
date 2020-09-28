@@ -27,6 +27,7 @@ wipengo<-function(except=c()){
   wipe(except=except)
   go()
 }
+
 clean<-function(except=c()){
   closeAllConnections()
   rm(list=ls(envir=.GlobalEnv)[!ls(envir=.GlobalEnv)%in%except],envir=.GlobalEnv)
@@ -125,12 +126,12 @@ telproc<-function(x){
 }
 
 
-prload<-function(f){
+prload<-function(f,...){
   x<-getwd()
   x1<-x%>%psub("/Worten/CVM Campaigns Management.*","/Worten/CVM Campaigns Management")
   x2<-x%>%psub(x1,"")%>%psub("/.*","/")
   x3<-"Processos Recorrentes/"
-  fload(paste0(x1,x2,x3,f))
+  fload(paste0(x1,x2,x3,f),...)
 }
 
 
