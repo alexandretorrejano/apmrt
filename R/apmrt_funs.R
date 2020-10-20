@@ -135,6 +135,14 @@ prload<-function(f,...){
 }
 
 
+prsource<-function(f){
+  x<-getwd()
+  x1<-x%>%psub("/Worten/CVM Campaigns Management.*","/Worten/CVM Campaigns Management")
+  x2<-x%>%psub(x1,"")%>%psub("/.*","/")
+  x3<-"Processos Recorrentes/"
+  source(paste0(x1,x2,x3,f))
+}
+
 bdcon<-function(bd){
   if(bd=="hive"){
     return(odbc::dbConnect(odbc::odbc(),"Hive_PRD"))
