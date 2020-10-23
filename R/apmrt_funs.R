@@ -62,9 +62,9 @@ fload<-function(f,septxt=TRUE,...){
   } else if(lext=="txt" & septxt==TRUE){
     d<-utils::read.table(f,...)%>%data.table
   } else if(lext=="txt" & septxt==FALSE){
-    d<-utils::readLines(f,...)
+    d<-base::readLines(f,...)
   } else if(lext=="rds"){
-    d<-readRDS(f,...)
+    d<-base::readRDS(f,...)
   } else{
     stop(paste0("FILE ERROR: UNKNOWN EXTENSION FOR READING: .",ext,"\n"))
   }
@@ -73,7 +73,7 @@ fload<-function(f,septxt=TRUE,...){
 }
 
 # Saves data/object to file
-fsave<-function(d,f,...){
+fsave<-function(d,f,septxt=TRUE,...){
   ext<-f%>%strsplit("\\.")%>%unlist
 
   if(length(ext)>1){
@@ -86,13 +86,15 @@ fsave<-function(d,f,...){
   lext<-tolower(ext)
 
   if(lext=="csv"){
-    d<-data.table::fwrite(d,f,...)
+    data.table::fwrite(d,f,...)
   } else if(lext=="xlsx"){
-    d<-openxlsx::write.xlsx(d,f,...)%>%data.table
-  } else if(lext=="txt"){
-    d<-utils::write.table(d,f,...)%>%data.table
+    openxlsx::write.xlsx(d,f,...)
+  } else if(lext=="txt" & septxt==TRUE){
+    utils::write.table(d,f,...)
+  } else if(lext=="txt" & septxt==FALSE){
+    base::writeLines(d,f,...)
   } else if(lext=="rds"){
-    d<-saveRDS(d,f,...)
+    base::saveRDS(d,f,...)
   } else{
     stop(paste0("FILE ERROR: UNKNOWN EXTENSION FOR WRITING: .",ext,"\n"))
   }
