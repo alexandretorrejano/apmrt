@@ -42,7 +42,7 @@ cleango<-function(except=c()){
 }
 
 # Loads data/object from file
-fload<-function(f,...){
+fload<-function(f,septxt=TRUE,...){
   ext<-f%>%strsplit("\\.")%>%unlist
 
   if(length(ext)>1){
@@ -59,8 +59,10 @@ fload<-function(f,...){
     d<-openxlsx::read.xlsx(f,...)%>%data.table
   } else if(lext=="xls"){
     d<-readxl::read_xls(f,...)%>%data.table
-  } else if(lext=="txt"){
+  } else if(lext=="txt" & septxt==TRUE){
     d<-utils::read.table(f,...)%>%data.table
+  } else if(lext=="txt" & septxt==FALSE){
+    d<-utils::readLines(f,...)
   } else if(lext=="rds"){
     d<-readRDS(f,...)
   } else{
