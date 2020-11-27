@@ -147,20 +147,6 @@ prsource<-function(f){
   source(paste0(x1,x2,x3,f))
 }
 
-bdcon<-function(bd){
-  if(bd=="hive"){
-    return(odbc::dbConnect(odbc::odbc(),"Hive_PRD"))
-  }
-  if(bd=="oms"){
-    return(odbc::dbConnect(odbc::odbc(), "OMS"))
-  }
-  if(bd=="vll"){
-    return(ROracle::dbConnect(dbDriver("Oracle"),dbname="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=vllprd.mch.moc.sgps)(PORT=1530))(CONNECT_DATA=(SERVICE_NAME=VLL)))",username="gsoliveira",password="gsoliv3ir4"))
-  }
-  if(bd=="crm"){
-    return(odbc::dbConnect(odbc::odbc(), "CRMx32"))
-  }
-}
 
 
 bdquery<-function(bd,q){
@@ -177,9 +163,11 @@ bdquery<-function(bd,q){
     colnames(x)%<>%gsub(pattern=".*\\.",replacement="")
     return(x)
   }
+  if(Class=="Impala"){
+    x<-DBI::dbGetQuery(bd,q)%>%data.table
+    colnames(x)%<>%gsub(pattern=".*\\.",replacement="")
+    return(x)
+  }
+  cat("\nThis function doesn't know how to handle this DB type...")
 }
 
-cquery<-function(bdname,q){
-  bd<-bdcon(bdname)
-  bdquery(bd,q)
-}
