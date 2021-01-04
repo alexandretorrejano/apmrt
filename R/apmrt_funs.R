@@ -138,6 +138,14 @@ prload<-function(f,...){
   fload(paste0(x1,x2,x3,f),...)
 }
 
+prsave<-function(o,f,...){
+  x<-getwd()
+  x1<-x%>%psub("/Worten/CVM Campaigns Management.*","/Worten/CVM Campaigns Management")
+  x2<-x%>%psub(x1,"")%>%psub("/.*","/")
+  x3<-"Processos Recorrentes/"
+  fsave(o,paste0(x1,x2,x3,f),...)
+}
+
 
 prsource<-function(f){
   x<-getwd()
