@@ -110,7 +110,7 @@ dbquery<-function(con,q){
 }
 
 # Replaces a pattern in a vector of strings
-psub<-function(x,pattern,replacement,ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE){
+psub<-function(x,pattern,replacement="",ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE){
   gsub(pattern, replacement, x, ignore.case, perl,fixed,useBytes)
 }
 
