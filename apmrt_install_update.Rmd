@@ -6,20 +6,29 @@ editor_options:
 
 ```{r remove}
 {
-  ver1<-packageVersion("apmrt")
-  remove.packages("apmrt")
+  if("apmrt"%in%rownames(installed.packages())){
+    ver1<-packageVersion("apmrt")
+    remove.packages("apmrt")
+  } else{
+    ver1<-"Not Installed"
+  }
   .rs.restartR()
-  cat("Done. Proceed with install chunk.")
+  cat("Done. Proceed with install chunk after session resumes.")
 }
 ```
 
 ```{r install}
 {
-  devtools::install_github("alexandretorrejano/apmrt")
+  #requires RTools installation
+  if(!require('pacman')){install.packages('pacman')}
+  devtools::install_github("alexandretorrejano/apmrt",force=TRUE)
   library(apmrt)
-  cat(paste("\nVersion as of Script Call:",ver1))
-  cat(paste("\nNewly Installed Version:  ",packageVersion("apmrt")))
-  rm(ver1)
+  if("ver1"%in%ls()){
+    cat(paste("\nPrevious Version:   ",ver1))
+    rm(ver1)
+  }
+  cat(paste(  "\nInstalled Version:  ",packageVersion("apmrt")))
 }
 ```
+
 

@@ -179,3 +179,11 @@ bdquery<-function(bd,q){
   cat("\nThis function doesn't know how to handle this DB type...")
 }
 
+chunk_cycle<-function(data_size,chunk_size){
+  i<-1:ceiling(data_size/chunk_size)
+  data.frame(
+    i=i,
+    chunk_begin=(i-1)*chunk_size+1,
+    chunk_end=ifelse(i*chunk_size<data_size,i*chunk_size,data_size)
+  )
+}
