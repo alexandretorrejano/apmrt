@@ -36,6 +36,13 @@ clean<-function(except=c()){
   cat("\nEnvironment Cleaned.\n")
 }
 
+wash<-function(except=c()){
+  rm(list=ls(envir=.GlobalEnv)[!ls(envir=.GlobalEnv)%in%except],envir=.GlobalEnv)
+  tryCatch(dev.off(),error=function(e){NULL})
+  gc()
+  cat("\nEnvironment Washed.\n")
+}
+
 cleango<-function(except=c()){
   clean(except=except)
   go()
