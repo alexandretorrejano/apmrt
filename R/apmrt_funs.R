@@ -2,6 +2,16 @@ if(!require(pacman)){install.packages("pacman")}
 pacman::p_load(openxlsx,data.table,utils,readxl,DBI)
 
 
+
+prsource<-function(f){
+  x<-getwd()
+  x1<-x%>%psub("/Worten/CVM Campaigns Management.*","/Worten/CVM Campaigns Management")
+  x2<-x%>%psub(x1,"")%>%psub("/.*","/")
+  x3<-"Processos Recorrentes/"
+  source(paste0(x1,x2,x3,f))
+}
+
+
 # Sets working directory, disables scientific notation, installs frequently used packages
 go<-function(){
   setwd(dirname(rstudioapi::getSourceEditorContext()$path))
@@ -9,6 +19,8 @@ go<-function(){
   #if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
   pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,DBI,ROracle,chron)
+  if(getwd()%>%like("CVM Campaigns Management"))
+    prsource("wrtcon.R")
   cat(paste0("Options set to the following directory:\n",getwd(),"\n"))
 }
 
@@ -154,13 +166,6 @@ prsave<-function(o,f,...){
 }
 
 
-prsource<-function(f){
-  x<-getwd()
-  x1<-x%>%psub("/Worten/CVM Campaigns Management.*","/Worten/CVM Campaigns Management")
-  x2<-x%>%psub(x1,"")%>%psub("/.*","/")
-  x3<-"Processos Recorrentes/"
-  source(paste0(x1,x2,x3,f))
-}
 
 
 
