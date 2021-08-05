@@ -173,10 +173,10 @@ bdquery<-function(bd,q){
   Class<-class(bd)%>%as.vector
   cat(paste0("\nRunning query on ",Class,".\n"))
   if(Class=="Microsoft SQL Server"){
-    DBI::dbGetQuery(bd,q)%>%data.table
+    return(DBI::dbGetQuery(bd,q)%>%data.table)
   }
   if(Class=="OraConnection"){
-    ROracle::dbSendQuery(bd,q)%>%fetch
+    return(ROracle::dbSendQuery(bd,q)%>%fetch%>%as.data.table)
   }
   if(Class=="Hive"){
     x<-DBI::dbGetQuery(bd,q)%>%data.table
