@@ -199,3 +199,15 @@ chunk_cycle<-function(data_size,chunk_size){
     chunk_end=ifelse(i*chunk_size<data_size,i*chunk_size,data_size)
   )
 }
+
+
+wxl<-function(tablist,path,overwrite=TRUE){
+  wb<-openxlsx::createWorkbook()
+  for(i in 1:length(tablist)){
+    openxlsx::addWorksheet(wb,names(tablist)[i])
+    openxlsx::writeDataTable(wb,names(tablist)[i],tablist[[i]])
+    widths<-tablist[[i]]%>%as.matrix%>%rbind(colnames(tablist[[i]]))%>%nchar%>%apply(2,max)+4
+    openxlsx::setColWidths(wb, sheet = names(tablist)[i], cols = 1:ncol(tablist[[i]]), widths = widths)
+  }
+  openxlsx::saveWorkbook(wb,path,overwrite=overwrite)
+}
