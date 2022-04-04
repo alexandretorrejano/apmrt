@@ -45,6 +45,8 @@ wipengo<-function(except=c(),short=FALSE){
   go(short=short)
 }
 
+
+
 clean<-function(except=c()){
   closeAllConnections()
   rm(list=ls(envir=.GlobalEnv)[!ls(envir=.GlobalEnv)%in%except],envir=.GlobalEnv)
@@ -63,6 +65,15 @@ wash<-function(except=c()){
 cleango<-function(except=c(),short=FALSE){
   clean(except=except)
   go(short=short)
+}
+
+wgo<-function(){
+  wipe()
+  go(short=TRUE)
+}
+cgo<-function(){
+  clean()
+  go(short=TRUE)
 }
 
 # Loads data/object from file
