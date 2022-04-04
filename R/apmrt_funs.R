@@ -21,7 +21,7 @@ go<-function(short=FALSE){
   if(short==FALSE){
     pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,DBI,ROracle,chron)
   } else{
-    pacman::p_load(DBI,data.table,magrittr,stringr,openxlsx,lubridate)
+    pacman::p_load(DBI,data.table,magrittr,dplyr,stringr,openxlsx,lubridate)
   }
 
   if(getwd()%>%like("CVM Campaigns Management"))
