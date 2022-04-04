@@ -1,5 +1,5 @@
 if(!require(pacman)){install.packages("pacman")}
-pacman::p_load(openxlsx,data.table,utils,readxl,DBI)
+pacman::p_load(openxlsx,data.table,utils,DBI)
 
 
 
@@ -13,12 +13,17 @@ prsource<-function(f){
 
 
 # Sets working directory, disables scientific notation, installs frequently used packages
-go<-function(){
+go<-function(short=FALSE){
   setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 
   #if(!require(pacman)){install.packages("pacman")}
   options(scipen=999)
-  pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,DBI,ROracle,chron)
+  if(short==FALSE){
+    pacman::p_load(backports,bit64,cluster,data.table,devtools,DBI,devtools,DMwR,doParallel,dplyr,factoextra,fastmatch,foreach,ggplot2,gmodels,kableExtra,knitr,kohonen,lubridate,maditr,NbClust,odbc,openxlsx,parallel,progress,readxl,reshape,RGoogleAnalytics,rlang,rmarkdown,stringr,WriteXLS,DBI,ROracle,chron)
+  } else{
+    pacman::p_load(DBI,data.table,magrittr,stringr,openxlsx,lubridate)
+  }
+
   if(getwd()%>%like("CVM Campaigns Management"))
     prsource("wrtcon.R")
   cat(paste0("Options set to the following directory:\n",getwd(),"\n"))
@@ -35,9 +40,9 @@ wipe<-function(except=c()){
 }
 
 #wipe() then go()
-wipengo<-function(except=c()){
+wipengo<-function(except=c(),short=FALSE){
   wipe(except=except)
-  go()
+  go(short=short)
 }
 
 clean<-function(except=c()){
@@ -55,9 +60,9 @@ wash<-function(except=c()){
   cat("\nEnvironment Washed.\n")
 }
 
-cleango<-function(except=c()){
+cleango<-function(except=c(),short=FALSE){
   clean(except=except)
-  go()
+  go(short=short)
 }
 
 # Loads data/object from file
